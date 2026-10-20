@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-script: "Caveat", cursive;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-neutral-950);
+  color: var(--color-neutral-100);
+  font-weight: 300; /* Inter Light. Headings and buttons set their own heavier weights. */
+}
+
+/* Fixed navbar must not cover section headings when jumping to anchors */
+section[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(var(--stagger-i, 0) * 70ms);
+}
+
+/* ---------- Hero ---------- */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-neutral-100);
+}
+.text-outline-amber {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-amber-400);
+}
+
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(0.6em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-word-in {
+  animation: word-in 0.5s ease both;
+}
+
+/* ---------- Marquee ---------- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 45s linear infinite;
+}
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Chat ---------- */
+@keyframes chat-pop {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-chat-pop {
+  animation: chat-pop 0.2s ease both;
+  transform-origin: bottom right;
+}
+@keyframes typing-dot {
+  0%, 80%, 100% { opacity: 0.25; }
+  40% { opacity: 1; }
+}
+
+/* ---------- Misc ---------- */
+.underline-hover {
+  background-image: linear-gradient(var(--color-amber-400), var(--color-amber-400));
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+.underline-hover:hover,
+.underline-hover:focus-visible {
+  background-size: 100% 1.5px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-amber-400);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-amber-400);
+  color: var(--color-neutral-950);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal,
+  .reveal-stagger > *,
+  .reveal-stagger.is-visible > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .marquee-track,
+  .animate-word-in,
+  .animate-chat-pop {
+    animation: none !important;
+  }
+}
